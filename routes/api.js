@@ -42,7 +42,7 @@ router.post('/sendSMS', (req, res) => {
         // }).catch((error) => {
         //     workflow.emit('error-handler', error)
         // })
-        res.json({ success: true });
+        res.json({ success: "OK" });
     });
 
     workflow.on('error-handler', (err) => {
