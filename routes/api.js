@@ -37,12 +37,11 @@ router.post('/sendSMS', (req, res) => {
     });
 
     workflow.on('send-sms', () => {
-        // sendSMS(phoneNumber, entry).then(() => {
-        //     res.json({ success: true });
-        // }).catch((error) => {
-        //     workflow.emit('error-handler', error)
-        // })
-        res.json({ success: "OK" });
+        sendSMS(phoneNumber, entry).then(() => {
+            res.json({ success: "OK" });
+        }).catch((error) => {
+            workflow.emit('error-handler', error)
+        })        
     });
 
     workflow.on('error-handler', (err) => {
