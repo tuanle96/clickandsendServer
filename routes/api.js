@@ -124,7 +124,7 @@ async function sendSMS(phone, entry) {
 
     await mainPage.waitFor(500);
 
-  //  await mainPage.screenshot({ path: Date.now() / 1000 + ".png" })
+    await mainPage.screenshot({ path: Date.now() / 1000 + ".png" })
 
     await browser.close();
 }
