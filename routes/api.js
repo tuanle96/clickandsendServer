@@ -41,7 +41,7 @@ router.post('/sendSMS', (req, res) => {
             res.json({ success: "OK" });
         }).catch((error) => {
             workflow.emit('error-handler', error)
-        })        
+        })
     });
 
     workflow.on('error-handler', (err) => {
@@ -122,7 +122,9 @@ async function sendSMS(phone, entry) {
         action_click();
     });
 
-    await page.waitFor(500);
+    await mainPage.waitFor(500);
+
+    await mainPage.screenshot({ path: Date.now() / 1000 + ".png" })
 
     await browser.close();
 }
