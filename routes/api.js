@@ -15,40 +15,37 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'API FOR G3G4.VN' });
 });
 
+// router.get('/sendSMS', (req, res) => {
+//     const phoneNumber = req.params.phoneNumber || "01629680825";
+//     const entry = req.params.entry || "XIN CHAO BAN";
+
+//     sendSMS(phoneNumber, entry).then(() => {
+//         res.json({ success: "OK" });
+//     }).catch((error) => {
+//         res.json({ error: error });
+//     })
+// })
+
 router.post('/sendSMS', (req, res) => {
 
     const phoneNumber = req.body.phoneNumber;
     const entry = req.body.entry;
 
-    var workflow = new (require('events').EventEmitter)();
+    if (!phoneNumber) {
+        res.json({ error: "Phone Number is required" });
+        return
+    }
 
-    workflow.on('validate-parameters', () => {
-        if (!phoneNumber) {
-            workflow.emit('error-handler', 'Phone number is required');
-            return
-        }
+    if (!entry) {
+        res.json({ error: "Entry is required" });
+        return
+    }
 
-        if (!entry) {
-            workflow.emit('error-handler', 'Entry is required');
-            return
-        }
-
-        workflow.emit('send-sms')
+    sendSMS(phoneNumber, entry).then(() => {
+        res.json({ success: "OK" });
+    }).catch((error) => {
+        res.json({ error: error });
     });
-
-    workflow.on('send-sms', () => {
-        sendSMS(phoneNumber, entry).then(() => {
-            res.json({ success: "OK" });
-        }).catch((error) => {
-            workflow.emit('error-handler', error)
-        })
-    });
-
-    workflow.on('error-handler', (err) => {
-        res.json({ error: err });
-    });
-
-    workflow.emit('validate-parameters');
 })
 
 async function sendSMS(phone, entry) {
