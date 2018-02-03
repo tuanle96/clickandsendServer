@@ -12,7 +12,7 @@ const OPTIONS = {
 }
 
 router.get('/', (req, res) => {
-    res.render('index', { title: 'G3G4.VN' });
+    res.render('index', { title: 'API FOR G3G4.VN' });
 });
 
 router.post('/sendSMS', (req, res) => {
@@ -37,11 +37,12 @@ router.post('/sendSMS', (req, res) => {
     });
 
     workflow.on('send-sms', () => {
-        sendSMS(phoneNumber, entry).then(() => {
-            res.json({ success: true });
-        }).catch((error) => {
-            workflow.emit('error-handler', error)
-        })
+        // sendSMS(phoneNumber, entry).then(() => {
+        //     res.json({ success: true });
+        // }).catch((error) => {
+        //     workflow.emit('error-handler', error)
+        // })
+        res.json({ success: true });
     });
 
     workflow.on('error-handler', (err) => {
