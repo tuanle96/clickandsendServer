@@ -50,13 +50,13 @@ router.post('/sendSMS', (req, res) => {
 })
 
 async function sendSMS(phone, entry) {
-//console.log("0")
+console.log("0")
     const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-//	console.log("1");
+	console.log("1");
     const page = await browser.newPage();
-//	console.log("2");
+	console.log("2");
  await page.goto('https://g3g4.vn/sms/login.jsp');
-//console.log("3");
+console.log("3");
     //login
     const username = await page.$('#username'); //input username
     const password = await page.$('#passWord'); //input password
@@ -119,7 +119,7 @@ async function sendSMS(phone, entry) {
 
     //excute send sms action with js
     await mainPage.evaluate(() => {
-        action_click();
+ //       action_click();
     });
 
     await mainPage.waitFor(500);
