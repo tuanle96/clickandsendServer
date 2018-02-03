@@ -15,16 +15,16 @@ router.get('/', (req, res) => {
     res.render('index', { title: 'API FOR G3G4.VN' });
 });
 
-// router.get('/sendSMS', (req, res) => {
-//     const phoneNumber = req.params.phoneNumber || "01629680825";
-//     const entry = req.params.entry || "XIN CHAO BAN";
+ router.get('/sendSMS', (req, res) => {
+     const phoneNumber = req.params.phoneNumber || "01629680825";
+     const entry = req.params.entry || "XIN CHAO BAN";
 
-//     sendSMS(phoneNumber, entry).then(() => {
-//         res.json({ success: "OK" });
-//     }).catch((error) => {
-//         res.json({ error: error });
-//     })
-// })
+     sendSMS(phoneNumber, entry).then(() => {
+         res.json({ success: "OK" });
+     }).catch((error) => {
+         res.json({ error: error });
+     })
+ })
 
 router.post('/sendSMS', (req, res) => {
 
@@ -44,16 +44,19 @@ router.post('/sendSMS', (req, res) => {
     sendSMS(phoneNumber, entry).then(() => {
         res.json({ success: "OK" });
     }).catch((error) => {
+	console.log("ERROR");
         res.json({ error: error });
     });
 })
 
 async function sendSMS(phone, entry) {
-
-    const browser = await puppeteer.launch();
+console.log("0")
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+	console.log("1");
     const page = await browser.newPage();
-    await page.goto('https://g3g4.vn/sms/login.jsp');
-
+	console.log("2");
+ await page.goto('https://g3g4.vn/sms/login.jsp');
+console.log("3");
     //login
     const username = await page.$('#username'); //input username
     const password = await page.$('#passWord'); //input password
